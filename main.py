@@ -30,6 +30,7 @@ class App(tk.Tk):
     def draw_system(self):
         self.solar_system.draw(self.canvas)
         self.solar_system.move()
+        self.solar_system.update_velocity()
 
 if __name__ == "__main__":
     app = App()

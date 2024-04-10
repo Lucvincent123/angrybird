@@ -1,3 +1,5 @@
+from .Vector import Vector
+
 class System:
     def __init__(self):
         self.planets = []
@@ -12,3 +14,13 @@ class System:
     def move(self):
         for planet in self.planets:
             planet.move()
+
+    def update_velocity(self):
+        nb_planets = len(self.planets)
+        for i in range(nb_planets):
+            acceleration = Vector(0, 0)
+            # A completer
+            
+            self.planets[i].update_velocity_with_acceleration(acceleration)
+
+

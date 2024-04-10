@@ -1,4 +1,4 @@
-from Vector import Vector
+from .Vector import Vector
 
 class Planet:
     def __init__(self, mass, radius, color, position, velocity=Vector(0, 0)):
@@ -14,6 +14,9 @@ class Planet:
 
     def update_velocity(self, new_velocity):
         self.velocity = new_velocity
+
+    def update_velocity_with_acceleration(self, acceleration):
+        self.velocity += acceleration
 
     def draw(self, window):
         window.delete(self.image)
