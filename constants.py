@@ -1,4 +1,0 @@
-APP_TITLE = "Solar system simulation"
-BACKGROUND_COLOR = "black"
-CANVAS_WIDTH = 1200
-CANVAS_HEIGHT = 700
