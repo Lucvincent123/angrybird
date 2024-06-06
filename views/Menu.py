@@ -38,11 +38,36 @@ class Menu:
         #########################################################################################
         self.buttons.append(button)
 
+    def remove_button(self, index):
+        """Remove a button by its index
+
+        Args:
+            index (_int_): the index
+
+        Returns:
+            _obj_ Button: the removed button
+        """        
+        self.positions_buttons.pop(-1)
+        return self.buttons.pop(index)
+
     def draw(self):
         """Draw the menu on the canvas
         """        
         for i in range(len(self.buttons)):
             self.buttons[i].draw(self.positions_buttons[i])
+
+    def clear(self):
+        """Clear the menu on the canvas
+        """
+        for button in self.buttons:
+            button.clear()
+
+    def update(self):
+        """Update the menu
+        """        
+        print("update")
+        self.clear()
+        self.draw()
 
     def hide(self):
         """Hide the menu
@@ -57,9 +82,21 @@ class Menu:
             button.show()
 
     def activate(self):
+        """Activate the menu
+        """        
         for button in self.buttons:
             button.activate()
 
     def desactivate(self):
+        """Desactivate the menu
+        """        
         for button in self.buttons:
             button.desactivate()
+
+    def empty(self):
+        """Empty the menu
+        """        
+        self.buttons.clear()
+        self.positions_buttons.clear()
+
+    

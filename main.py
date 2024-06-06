@@ -15,6 +15,7 @@ from views.SwitchModeButton import SwitchModeButton
 from views.NormalButton import NormalButton
 from views.Menu import Menu
 from views.InputCreate import InputCreate
+from views.PlanetButton import PlanetButton
 
 class App(tk.Tk):
     slots = ["mode", "status", "new_planet", "arrow", "arrow_image"]
@@ -32,8 +33,8 @@ class App(tk.Tk):
         self.arrow = None
         self.arrow_image = None
         self.mouse_position = Vector(0, 0)
-        self.controller = Controller(self)
-        self.handler = EventHandler(self, Vector, InputCreate, Planet)
+        self.controller = Controller(self, PlanetButton, Planet, Vector)
+        self.handler = EventHandler(self, Vector, InputCreate, Planet, PlanetButton)
         self.universe = Universe()
         self.draw_loop = Loop(self, int(c.DELTA_T * 1000), self.draw_universe)
         ######################################################################################
@@ -53,20 +54,27 @@ class App(tk.Tk):
         self.switch_mode_button = SwitchModeButton(self.background, c.RADIUS_BUTTON, c.THICKNESS_OUTLINE_BUTTON, c.BACKGROUND_COLOR_BUTTON, c.FOREGROUND_COLOR_BUTTON)
         self.switch_mode_button.draw((32.5, 32.5))
         ## horizontal tool menu
-        self.tool_menu = Menu("horizontal", (120, 32.5), 10)
+        self.tool_menu = Menu("vertical", (32.5, 120), 30)
         ### Create button
         self.create_button = NormalButton(self.background, c.RADIUS_BUTTON, c.THICKNESS_OUTLINE_BUTTON, c.BACKGROUND_COLOR_BUTTON, c.FOREGROUND_COLOR_BUTTON, "CREATE")
         self.tool_menu.add_button(self.create_button)
         ### Delete button
         self.delete_button = NormalButton(self.background, c.RADIUS_BUTTON, c.THICKNESS_OUTLINE_BUTTON, c.BACKGROUND_COLOR_BUTTON, c.FOREGROUND_COLOR_BUTTON, "DELETE")
         self.tool_menu.add_button(self.delete_button)
-        
+        ### Save button
+        self.save_button = NormalButton(self.background, c.RADIUS_BUTTON, c.THICKNESS_OUTLINE_BUTTON, c.BACKGROUND_COLOR_BUTTON, c.FOREGROUND_COLOR_BUTTON, "SAVE")
+        self.tool_menu.add_button(self.save_button)
+        #
         self.tool_menu.draw()
         self.tool_menu.hide()
+        ## Vertical planet menu
+        self.planet_menu = Menu("horizontal", (120, 32.5), 10)
         #################################################################################################################################################################
         # Events
         ## App
         self.bind("<KeyPress>", self.handler.press)
+        ## Background
+        self.background.bind("<Button-1>", self.handler.click_background)
         ## Canvas
         self.canvas.bind("<Motion>", self.handler.move_with_mouse)
         self.canvas.bind("<Button-1>", self.handler.click_canvas)
@@ -79,10 +87,16 @@ class App(tk.Tk):
         self.create_button.bind("<Button-1>", self.handler.press_create_button)
         ### Delete button
         self.delete_button.bind("<Button-1>", self.handler.press_delete_button)
+        ### Save button
+        self.save_button.bind("<Button-1>", self.handler.press_save_button)
+        #######################################################################################
+        self.controller.load(c.FILE_PATH)
         #######################################################################################
         self.draw_loop.start()
-        
+
     def draw_universe(self):
+        """Redraw the whole universe in a loop
+        """        
         self.controller.draw_universe()
         if self.mode == "view":
             self.universe.move(c.DELTA_T)
@@ -93,9 +107,11 @@ class App(tk.Tk):
             self.controller.draw_planet(self.new_planet)
 
     def activate(self):
+        ## Activate the app
         self.status = "active"
 
     def desactivate(self):
+        ## Desactivate the app
         self.status = "disable"
 
 if __name__ == "__main__":
