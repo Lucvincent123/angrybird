@@ -50,7 +50,6 @@ class InputCreate(tk.Toplevel):
         self.cancel_button = tk.Button(self.control_frame, text="Cancel", width=10, command=self.close)
         self.cancel_button.grid(row=5, column=1)
         ################################################################
-        # self.wait_window(self)
         self.mainloop()
     
     def close(self):

@@ -28,7 +28,7 @@ class Button:
                                                   outline=foreground_color, 
                                                   width=thickness, 
                                                   fill=background_color)
-        
+          
     def hide(self):
         """Hide the button
         """        
@@ -57,5 +57,6 @@ class Button:
         """Desactivate the button
         """        
         self.status = "disable"
+
         
     

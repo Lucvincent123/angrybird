@@ -57,7 +57,7 @@ class Planet:
         """        
         vector_distance = self.position - planet.position 
         distance = abs(vector_distance)
-        acceleration = G * self.mass / (distance**3) /1000000000000000* vector_distance 
+        acceleration = G * self.mass / (distance**3) /1000000000000000 * vector_distance 
         return acceleration
     
     def is_hovered(self, mouse_position):
@@ -90,3 +90,23 @@ class Planet:
             _obj_ Planet: the copy of the planet not its pointer
         """        
         return Planet(self.name, self.mass, self.radius, self.color, self.position, self.velocity)
+    
+    def to_dict(self):
+        """Convert the planet object to a dictionary
+
+        Returns:
+            _dict_: the dictionary
+        """ 
+        x, y = self.position()    
+        vx, vy = self.velocity()   
+        dict = {
+            "name" : self.name,
+            "mass" : self.mass,
+            "radius" : self.radius,
+            "color" : self.color,
+            "x" : x,
+            "y" : y,
+            "vx" : vx,
+            "vy" : vy
+        } 
+        return dict
