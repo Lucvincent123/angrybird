@@ -64,8 +64,7 @@ class Menu:
 
     def update(self):
         """Update the menu
-        """        
-        print("update")
+        """
         self.clear()
         self.draw()
 
