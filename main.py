@@ -101,7 +101,6 @@ class App(tk.Tk):
         if self.mode == "view":
             self.universe.move(c.DELTA_T)
             self.universe.update_velocity(c.DELTA_T, c.G)
-            print(self.universe.planets)
         if self.mode == "choosing position":
             self.controller.erase_planet(self.new_planet)
             self.controller.draw_planet(self.new_planet)
